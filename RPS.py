@@ -1,10 +1,25 @@
-# The example function below keeps track of the opponent's history and plays whatever the opponent played two plays ago. It is not a very good player so you will need to change the code to pass the challenge.
+def player(prev_play):
+    # Initialize an empty list to store the opponent's history
+    opponent_history = []
 
-def player(prev_play, opponent_history=[]):
+    # Append the previous play to the opponent's history
     opponent_history.append(prev_play)
 
-    guess = "R"
-    if len(opponent_history) > 2:
-        guess = opponent_history[-2]
+    # If this is the first move, return a random move
+    if not opponent_history:
+        import random
+        moves = ['R', 'P', 'S']
+        return random.choice(moves)
 
-    return guess
+    # If the opponent's last move is the same as the move before that, play the move that beats it
+    if len(opponent_history) > 1 and opponent_history[-1] == opponent_history[-2]:
+        if opponent_history[-1] == 'R':
+            return 'P'
+        elif opponent_history[-1] == 'P':
+            return 'S'
+        else:
+            return 'R'
+
+    # Otherwise, play the same move as the opponent's last move
+    else:
+        return opponent_history[-1]
